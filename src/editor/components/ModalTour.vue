@@ -563,7 +563,6 @@ export default {
 			this.closePanel('panel-history')
 			this.closePanel('panel-tree')
 			this.closePanel('PanelElementOptions')
-			this.deleteAddedElement()
 			this.showTour = false
 			localStorage.setItem('zion_builder_guided_tour_done', true)
 		},

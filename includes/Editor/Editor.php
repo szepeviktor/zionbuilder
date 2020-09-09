@@ -49,6 +49,27 @@ class Editor {
 		add_action( 'admin_action_zion_builder_active', [ $this, 'init' ] );
 	}
 
+	public function can_show_editor( $post_id ) {
+		$return = true;
+
+		// Verify nonce
+		if ( ! Nonces::verify_nonce( Nonces::ACTIVE_EDITOR ) ) {
+			$return = false;
+		}
+
+		// Don't proceed if the post id is missing
+		if ( ! $post_id ) {
+			$return = false;
+		}
+
+		// Check permissions
+		if ( ! Permissions::can_edit_post( $post_id ) ) {
+			$return = false;
+		}
+
+		return apply_filters( 'zionbuilder/editor/can_load', $return );
+	}
+
 	/**
 	 * Init
 	 *
@@ -58,21 +79,10 @@ class Editor {
 	 */
 	public function init() {
 
-		// Verify nonce
-		if ( ! Nonces::verify_nonce( Nonces::ACTIVE_EDITOR ) ) {
-			return;
-		}
-
 		// Get the post id
-		$post_id = isset( $_GET['post_id'] ) ? absint( $_GET['post_id'] ) : false; // phpcs:ignore WordPress.Security.NonceVerification
+		$post_id = isset( $_GET['post_id'] ) ? absint( $_GET['post_id'] ) : null; // phpcs:ignore WordPress.Security.NonceVerification
 
-		// Don't proceed if the post id is missing
-		if ( ! $post_id ) {
-			return;
-		}
-
-		// Check permissions
-		if ( ! Permissions::can_edit_post( $post_id ) ) {
+		if ( ! $this->can_show_editor( $post_id ) ) {
 			return;
 		}
 

@@ -45,9 +45,11 @@ class RestApiController extends \WP_REST_Controller {
 	/**
 	 * Check to see whether or not the current user has permissions to trigger the specified $action_name
 	 *
+	 * @param mixed $request
+	 *
 	 * @return bool
 	 */
-	public function userCan() {
-		return Permissions::user_allowed_edit();
+	public function userCan( $request ) {
+		return apply_filters( 'zionbuilder/rest/user_can', Permissions::user_allowed_edit(), $request );
 	}
 }
