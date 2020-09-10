@@ -326,21 +326,19 @@ export default {
 		onSaving (status) {
 			this.savePage(this, {
 				status
-			}).catch(error => {
-				this.addNotice({
-					message: error.message,
-					type: 'error',
-					delayClose: 5000
-				})
-			}).finally(() => {
-				const noticeText = status
-				this.addNotice({
-					message: status === 'publish' ? this.$translate('page_saved_publish') : this.$translate('page_saved'),
-					delayClose: 5000
-				}).then(() => {
-					this.isDisplayingSaveNotice = false
-				})
 			})
+				// Prevent console error
+				// eslint-disable-next-line
+				.catch(error => {})
+				.finally(() => {
+					const noticeText = status
+					this.addNotice({
+						message: status === 'publish' ? this.$translate('page_saved_publish') : this.$translate('page_saved'),
+						delayClose: 5000
+					}).then(() => {
+						this.isDisplayingSaveNotice = false
+					})
+				})
 		},
 		onSave () {
 			this.onSaving('publish')
@@ -429,7 +427,8 @@ export default {
 	},
 	watch: {
 		activeHistoryIndex (newValue) {
-			if (this.canAutosave && newValue > 0) {
+			const timeout = window.ZnPbInitalData.autosaveInterval
+			if (timeout > 0 && this.canAutosave && newValue > 0) {
 				this.savePage({
 					status: 'autosave',
 					showPreloader: false

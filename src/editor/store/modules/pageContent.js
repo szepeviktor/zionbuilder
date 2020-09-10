@@ -549,7 +549,12 @@ const actions = {
 			savePage(pageData).catch(error => {
 				Cache.saveItem(getters.getPageId, cloneSavedData)
 				// eslint-disable-next-line
-				console.error(error)
+				dispatch('addNotice', {
+					message: error,
+					type: 'error',
+					delayClose: 5000
+				})
+				reject(error)
 			}).finally(() => {
 				dispatch('setIsSavingPage', false)
 				resolve()

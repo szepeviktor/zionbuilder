@@ -5,6 +5,11 @@ export const getTemplates = function () {
 }
 
 export const addTemplate = function (template) {
+	if (!window.ZionBuilderApi.permissions.currentUserCan('save_templates')) {
+		// eslint-disable-next-line
+		return Promise.reject('You do not have permissions to perform this action')
+	}
+
 	return ZionService.post('templates', template)
 }
 
@@ -28,6 +33,11 @@ export const exportTemplateById = function (id) {
 }
 
 export const importTemplateLibrary = function (templateFile) {
+	if (!window.ZionBuilderApi.permissions.currentUserCan('save_templates')) {
+		// eslint-disable-next-line
+		return Promise.reject('You do not have permissions to perform this action')
+	}
+
 	return ZionService.post(
 		'templates/import',
 		templateFile,

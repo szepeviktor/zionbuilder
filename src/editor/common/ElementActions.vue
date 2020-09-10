@@ -303,19 +303,17 @@ export default {
 		savePageAction () {
 			this.savePage({
 				status: 'autosave'
-			}).catch(error => {
-				this.addNotice({
-					message: error.message,
-					type: 'error',
-					delayClose: 5000
-				})
-			}).finally(() => {
-				this.addNotice({
-					message: this.$translate('page_saved'),
-					delayClose: 5000
-				})
-				this.close()
 			})
+				// Prevent console error
+				// eslint-disable-next-line
+				.catch(error => {})
+				.finally(() => {
+					this.addNotice({
+						message: this.$translate('page_saved'),
+						delayClose: 5000
+					})
+					this.close()
+				})
 		},
 		close () {
 			this.$emit('close', false)

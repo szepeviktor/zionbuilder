@@ -1,6 +1,7 @@
 import './wordpress'
 import './editor/AxiosInterceptors'
 
+import ZionApi from './editorApi'
 import Accordion from '@/common/components/accordion/Accordion.vue'
 import BaseButton from './common/components/BaseButton.vue'
 import BaseIcon from './common/components/BaseIcon.vue'
@@ -17,7 +18,6 @@ import OptionsForm from '@/editor/components/elementOptions/forms/OptionsForm.vu
 import Tab from '@/common/components/tabs/tab.vue'
 import Tabs from '@/common/components/tabs/tabs.vue'
 import Vue from 'vue'
-import ZionApi from './editorApi'
 import ZionService from '@/api/ZionService'
 import { errorInterceptor } from './api/ServiceInterceptor'
 import store from './editor/store/index'

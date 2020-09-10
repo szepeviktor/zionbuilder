@@ -278,20 +278,15 @@ export default {
 				e.preventDefault()
 				if (!this.isDisplayingSaveNotice) {
 					this.isDisplayingSaveNotice = true
-					this.savePage({ status: 'publish' }).catch(error => {
-						this.addNotice({
-							message: error.message,
-							type: 'error',
-							delayClose: 5000
+					this.savePage({ status: 'publish' })
+						.finally(() => {
+							this.addNotice({
+								message: this.$translate('success_save'),
+								delayClose: 5000
+							}).then(() => {
+								this.isDisplayingSaveNotice = false
+							})
 						})
-					}).finally(() => {
-						this.addNotice({
-							message: this.$translate('success_save'),
-							delayClose: 5000
-						}).then(() => {
-							this.isDisplayingSaveNotice = false
-						})
-					})
 				}
 			}
 

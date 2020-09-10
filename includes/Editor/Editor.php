@@ -351,6 +351,13 @@ class Editor {
 					'pro_plugin_update'  => $pro_plugin_update,
 				],
 
+				'user_permissions'               => [
+					'save_page',
+					'save_templates',
+					'site_builder',
+					'save_options',
+				],
+
 				// Templates
 				'template_types'                 => Plugin::$instance->templates->get_template_types(),
 				'template_categories'            => Plugin::$instance->templates->get_template_categories(),

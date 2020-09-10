@@ -1,7 +1,7 @@
 import * as utils from '@/utils'
 
 import { addFilter, applyFilters } from './utils/filters'
-
+import Permissions from './Permissions'
 import ElementFocusMarshall from '@/editor/utils/ElementFocusMarshall'
 import ElementsManager from '@/editor/manager/elements'
 import EventBus from '@/editor/EventBus'
@@ -21,6 +21,8 @@ const eventBusInstance = EventBus
 const ZionBuilderApi = {
 	// Access to Vue Instance
 	Vue,
+
+	permissions: new Permissions(window.ZnPbInitalData.user_permissions),
 
 	// eventBus
 	on: eventBusInstance.addEventListener.bind(eventBusInstance),
