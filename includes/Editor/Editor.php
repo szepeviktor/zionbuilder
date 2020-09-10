@@ -356,6 +356,7 @@ class Editor {
 					'save_templates',
 					'site_builder',
 					'save_options',
+					'export_templates',
 				],
 
 				// Templates

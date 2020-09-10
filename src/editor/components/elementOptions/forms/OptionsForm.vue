@@ -7,6 +7,7 @@
 			:option-id="optionId"
 			:value="optionConfig.is_layout ? value : value[optionId]"
 			:delete-value="deleteValue"
+			:error="optionConfig.error"
 			:get-schema-from-path="getOptionSchemaFromPath"
 			:compile-placeholder="compilePlaceholder"
 			@input="setValue(...$event)"

@@ -72,7 +72,8 @@ export default {
 			loading: false,
 			loadingMessage: false,
 			errorMessage: '',
-			model: {}
+			model: {},
+			titleError: false
 		}
 	},
 
@@ -98,7 +99,8 @@ export default {
 				title: {
 					type: 'text',
 					title: this.$translate('choose_title'),
-					description: this.$translate('save_title_desc')
+					description: this.$translate('save_title_desc'),
+					error: this.titleError
 				},
 				category: {
 					type: 'select',
@@ -122,6 +124,13 @@ export default {
 		this.loadingMessage = ''
 		this.errorMessage = ''
 	},
+	watch: {
+		'model.title' (newValue) {
+			if (newValue && newValue.length > 0) {
+				this.titleError = false
+			}
+		}
+	},
 	methods: {
 		...mapActions([
 			'addTemplate',
@@ -129,6 +138,10 @@ export default {
 			'updateTemplateCategories'
 		]),
 		async saveElement () {
+			if (!this.prevalidateRequest()) {
+				return
+			}
+
 			// save template
 			this.loading = true
 			this.loadingMessage = ''
@@ -159,22 +172,36 @@ export default {
 					} else {
 						// add console warn if template was saved without a category
 						// in this case there is also success and error
-						// eslint-disable-next-line
-						console.warn(error)
 						this.errorMessage = error
 					}
 				})
 				.finally(() => {
-					this.loading = false
-					setTimeout(() => {
-						this.loadingMessage = false
-						this.errorMessage = false
-						this.model = {}
-					}, 3500)
+					this.onRequestEnd()
 				})
 		},
 
+		prevalidateRequest () {
+			if (!this.model.title || this.model.title.length === 0) {
+				this.titleError = true
+				return false
+			}
+
+			return true
+		},
+
+		onRequestEnd () {
+			this.loading = false
+			setTimeout(() => {
+				this.loadingMessage = false
+				this.errorMessage = false
+			}, 3500)
+		},
+
 		async downloadElement () {
+			if (!this.prevalidateRequest()) {
+				return
+			}
+
 			const compiledElementData = (this.template) ? await this.getPageContentNested() : compileElement(this.uid, this.getPageContent)
 			let templateType = (this.template) ? 'template' : 'block'
 			this.loading = true
@@ -193,14 +220,15 @@ export default {
 					this.loadingMessage = ''
 				})
 				.catch((error) => {
-					if (typeof error.response.data === 'string') {
+					if (typeof error === 'string') {
+						this.errorMessage = error
+					} else if (typeof error.response.data === 'string') {
 						this.errorMessage = error.response.data
 					} else this.errorMessage = this.arrayBufferToString(error.response.data)
 					this.model = {}
 				})
 				.finally(() => {
-					this.loading = false
-					this.model = {}
+					this.onRequestEnd()
 				})
 		},
 		onSaveElement (event) {

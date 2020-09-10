@@ -14,6 +14,11 @@ export const addTemplate = function (template) {
 }
 
 export const exportTemplate = function (template) {
+	if (!window.ZionBuilderApi.permissions.currentUserCan('export_templates')) {
+		// eslint-disable-next-line
+		return Promise.reject('You do not have permissions to perform this action')
+	}
+
 	return ZionService.post('templates/export', template, {
 		responseType: 'arraybuffer'
 	})
