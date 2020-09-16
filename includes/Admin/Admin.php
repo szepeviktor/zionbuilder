@@ -211,10 +211,16 @@ class Admin {
 				]
 			);
 
+			// make common components usable by pro
+			// wp_localize_script( 'znpb-admin-components-script', 'ZionBuilderApiComponents', $this->get_components_file() );
+
 			do_action( 'zionbuilder/admin/after_admin_scripts' );
 		}
 	}
 
+	// public function get_components_file() {
+	// 	return apply_filters( Utils::get_file_url( 'dist/js/components.js' ) );
+	// }
 
 	/**
 	 * Adds the render with pagebuilder action to the inline actions

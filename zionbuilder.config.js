@@ -10,7 +10,8 @@ module.exports = {
 		'js/preview': './src/preview.js',
 		'js/frontend': './src/scss/frontend/frontend.scss',
 		'js/video.js': './src/common/vendors/Video.js',
-		'js/videoBg.js': './src/common/vendors/videoBg.js'
+		'js/videoBg.js': './src/common/vendors/videoBg.js',
+		'js/components': './src/admin/admin-page/ZionBuilderApiComponents.js'
 	},
 	css: {
 		loaderOptions: {
