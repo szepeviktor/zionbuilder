@@ -15,6 +15,7 @@ import { Tooltip } from '@/common/components/tooltip'
 import { BaseInput } from '@/common/components/forms/elements/input'
 import GradientPreview from '@/common/components/gradient/GradientPreview.vue'
 import ActionsOverlay from '@/common/components/forms/elements/actions-overlay/ActionsOverlay'
+import BaseIcon from '@/common/components/BaseIcon.vue'
 
 const eventBusInstance = EventBus
 
@@ -46,7 +47,8 @@ const ZionBuilderApi = {
 		Tooltip,
 		BaseInput,
 		GradientPreview,
-		ActionsOverlay
+		ActionsOverlay,
+		BaseIcon
 	},
 
 	utils: utils,

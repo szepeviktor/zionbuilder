@@ -5,7 +5,7 @@ import { addFilter, applyFilters } from '@/utils/filters'
 import { InjectionComponentsManager } from '@/common/components/injections'
 import { Tooltip } from '@/common/components/tooltip'
 import { BaseInput } from '@/common/components/forms/elements/input'
-
+import BaseIcon from '@/common/components/BaseIcon.vue'
 // Utils
 import * as utils from '@/utils'
 import { errorInterceptor } from '@/api/ServiceInterceptor'
@@ -22,7 +22,8 @@ const ZionBuilderApi = {
 		ModalTemplateSaveButton,
 		IconPackGrid,
 		Tooltip,
-		BaseInput
+		BaseInput,
+		BaseIcon
 	},
 	utils,
 	interceptors: {
